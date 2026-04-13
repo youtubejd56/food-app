@@ -170,9 +170,9 @@ const Navbar = () => {
           </div>
 
           {/* ── Right: Links + Cart ── */}
-          <div className="flex items-center gap-1">
-            {/* Desktop nav links */}
-            <div className="hidden lg:flex items-center gap-2 mr-4">
+          <div className="flex items-center gap-2">
+            {/* Desktop-only nav and auth links */}
+            <div className="hidden lg:flex items-center gap-1">
               {navLinks.map((link) => (
                 <button
                   key={link.label}
@@ -182,7 +182,7 @@ const Navbar = () => {
                   {link.label}
                 </button>
               ))}
-            </div>
+              <div className="w-px h-5 bg-gray-200 mx-2" />
               {token ? (
                 <>
                   <button
@@ -219,24 +219,19 @@ const Navbar = () => {
               )}
             </div>
 
-            {/* Divider */}
-            <div className="hidden lg:block w-px h-5 bg-gray-200 mx-2" />
-
-            {/* Cart button */}
+            {/* Cart button (Optimized for Mobile) */}
             <button
               onClick={() => setIsCartOpen(true)}
-              className="relative flex items-center gap-2 bg-orange-500 hover:bg-orange-600 active:scale-95 text-white text-sm font-medium px-4 py-2 rounded-xl transition-all duration-150"
+              className="relative flex items-center gap-2 bg-orange-500 hover:bg-orange-600 active:scale-95 text-white text-sm font-bold px-3 py-2 sm:px-4 sm:py-2 rounded-xl transition-all duration-150"
             >
-              {/* Cart icon */}
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
                 <line x1="3" y1="6" x2="21" y2="6" />
                 <path d="M16 10a4 4 0 01-8 0" />
               </svg>
-              Cart
-              {/* Badge */}
+              <span className="hidden sm:inline">Cart</span>
               {cart.length > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-white text-orange-500 text-[10px] font-bold rounded-full flex items-center justify-center ring-2 ring-orange-500">
+                <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-white text-orange-600 text-[11px] font-black rounded-full flex items-center justify-center shadow-md ring-1 ring-orange-100">
                   {cart.length}
                 </span>
               )}
@@ -245,20 +240,21 @@ const Navbar = () => {
             {/* Mobile menu toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden ml-1 p-2 rounded-lg text-gray-500 hover:bg-gray-100 transition-colors"
+              className="lg:hidden p-2 rounded-xl text-gray-700 bg-gray-50 hover:bg-gray-100 transition-all border border-gray-100"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? (
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               ) : (
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 8h16M4 16h16" />
                 </svg>
               )}
             </button>
           </div>
+        </div>
 
         {/* ── Mobile dropdown menu ── */}
         {mobileMenuOpen && (
