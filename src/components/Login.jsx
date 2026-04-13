@@ -11,7 +11,7 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios.post('http://127.0.0.1:8000/api/login/', formData);
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/login/`, formData);
       setToken(res.data.access);
       addToast('Welcome back to GoodDash!');
       setCurrentPage('home');

@@ -11,7 +11,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await axios.get('http://127.0.0.1:8000/api/profile/', {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/profile/`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setProfile(res.data);
@@ -28,7 +28,7 @@ const Profile = () => {
     e.preventDefault();
     setUpdating(true);
     try {
-      await axios.patch('http://127.0.0.1:8000/api/profile/', profile, {
+      await axios.patch(`${import.meta.env.VITE_API_URL}/api/profile/`, profile, {
         headers: { Authorization: `Bearer ${token}` }
       });
       addToast('Profile updated successfully!');

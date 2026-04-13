@@ -15,7 +15,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
             setIsOrdering(true);
             
             // Real API Call to your Python Backend
-            const response = await axios.post('http://127.0.0.1:8000/api/orders/', {
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/orders/`, {
               items: cart.map(item => ({
                 name: item.name,
                 price: item.price || 0

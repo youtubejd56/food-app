@@ -218,7 +218,7 @@ export const AppProvider = ({ children }) => {
         // 1. Try fetching from your NEW PYTHON BACKEND
         let finalRestaurants = [];
         try {
-          const backendResponse = await axios.get('http://127.0.0.1:8000/api/restaurants/');
+          const backendResponse = await axios.get(`${import.meta.env.VITE_API_URL}/api/restaurants/`);
           if (backendResponse.data && backendResponse.data.length > 0) {
             finalRestaurants = backendResponse.data.map(res => ({
               id: res.id,
