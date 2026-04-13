@@ -4,6 +4,7 @@ import axios from 'axios';
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
+  const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
   const [location, setLocation] = useState(localStorage.getItem('userLocation') || 'Select Location');
   const [cart, setCart] = useState(JSON.parse(localStorage.getItem('foodCart')) || []);
   const [restaurants, setRestaurants] = useState([]);
@@ -218,7 +219,7 @@ export const AppProvider = ({ children }) => {
         // 1. Try fetching from your NEW PYTHON BACKEND
         let finalRestaurants = [];
         try {
-          const backendResponse = await axios.get(`${import.meta.env.VITE_API_URL}/api/restaurants/`);
+          const backendResponse = await axios.get(`${API_URL}/api/restaurants/`);
           if (backendResponse.data && backendResponse.data.length > 0) {
             finalRestaurants = backendResponse.data.map(res => ({
               id: res.id,
@@ -261,9 +262,10 @@ export const AppProvider = ({ children }) => {
 
           // B. Fetch from SerpApi for Restaurant data
           const apiKey = import.meta.env.VITE_SERP_API_KEY;
-          const targetUrl = `https://serpapi.com/search.json?engine=google_maps&q=restaurants+in+${encodeURIComponent(query)}&type=search&api_key=${apiKey}`;
-          try {
-            const response = await axios.get(`https://corsproxy.io/?${encodeURIComponent(targetUrl)}`);
+          if (apiKey && apiKey !== 'your_serp_api_key_here') {
+            const targetUrl = `https://serpapi.com/search.json?engine=google_maps&q=restaurants+in+${encodeURIComponent(query)}&type=search&api_key=${apiKey}`;
+            try {
+              const response = await axios.get(`https://corsproxy.io/?${encodeURIComponent(targetUrl)}`);
             const data = response.data;
             const results = data.place_results || data.local_results || [];
             
@@ -283,6 +285,7 @@ export const AppProvider = ({ children }) => {
             finalRestaurants = [...finalRestaurants, ...restaurants];
           } catch (e) { console.log("SerpApi Fetch failed"); }
         }
+        } // Close fallback if block
 
       setRestaurants(finalRestaurants.length ? finalRestaurants : mockRestaurants);
     } catch (error) {
@@ -303,6 +306,11 @@ export const AppProvider = ({ children }) => {
   }, [location]);
 
   const addToCart = (product) => {
+    if (!token) {
+      addToast('Please login to add items to your cart.', 'error');
+      setCurrentPage('login');
+      return;
+    }
     setCart((prev) => [...prev, product]);
     addToast(`${product.name} added to cart!`);
   };

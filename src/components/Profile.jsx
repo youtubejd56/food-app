@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useApp } from '../context/AppContext';
 
 const Profile = () => {
+  const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
   const { token, addToast } = useApp();
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -11,7 +12,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/profile/`, {
+        const res = await axios.get(`${API_URL}/api/profile/`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setProfile(res.data);
@@ -28,7 +29,7 @@ const Profile = () => {
     e.preventDefault();
     setUpdating(true);
     try {
-      await axios.patch(`${import.meta.env.VITE_API_URL}/api/profile/`, profile, {
+      await axios.patch(`${API_URL}/api/profile/`, profile, {
         headers: { Authorization: `Bearer ${token}` }
       });
       addToast('Profile updated successfully!');

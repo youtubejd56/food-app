@@ -3,19 +3,25 @@ import axios from 'axios';
 import { useApp } from '../../context/AppContext';
 
 const CartDrawer = ({ isOpen, onClose }) => {
-        const { setCurrentPage, setCurrentOrderId } = useApp();
-        const { cart, removeFromCart, clearCart, addToast } = useApp();
+        const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
+        const { cart, removeFromCart, clearCart, setCurrentPage, addToast, token, setCurrentOrderId } = useApp();
         const [isOrdering, setIsOrdering] = useState(false);
         const [orderSuccess, setOrderSuccess] = useState(false);
 
         const total = cart.reduce((sum, item) => sum + (item.price || 0), 0);
 
         const handlePlaceOrder = async () => {
+        if (!token) {
+            addToast('Please login to place your order.', 'error');
+            setCurrentPage('login');
+            onClose();
+            return;
+        }
           try {
             setIsOrdering(true);
             
             // Real API Call to your Python Backend
-            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/orders/`, {
+            const response = await axios.post(`${API_URL}/api/orders/`, {
               items: cart.map(item => ({
                 name: item.name,
                 price: item.price || 0

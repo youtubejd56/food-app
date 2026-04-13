@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useApp } from '../context/AppContext';
 
 const Register = () => {
+  const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
   const { setCurrentPage, addToast } = useApp();
   const [formData, setFormData] = useState({ username: '', email: '', password: '' });
   const [loading, setLoading] = useState(false);
@@ -11,7 +12,7 @@ const Register = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/api/register/`, formData);
+      await axios.post(`${API_URL}/api/register/`, formData);
       addToast('Registration successful! Please login.');
       setCurrentPage('login');
     } catch (err) {

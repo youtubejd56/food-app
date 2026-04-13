@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useApp } from '../context/AppContext';
 
 const TrackOrder = ({ orderId }) => {
+  const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
   const { setCurrentPage, addToast, location } = useApp();
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -18,7 +19,7 @@ const TrackOrder = ({ orderId }) => {
   useEffect(() => {
     const fetchOrder = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/orders/${orderId}/`);
+        const response = await axios.get(`${API_URL}/api/orders/${orderId}/`);
         setOrder(response.data);
       } catch (error) {
         console.error("Fetch order error:", error);
