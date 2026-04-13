@@ -28,7 +28,7 @@ const RestaurantCard = ({ res, onAdd }) => {
   const dishName = getDishName(res.category, res.name);
 
   return (
-    <div className="group bg-white rounded-3xl border border-gray-100 overflow-hidden hover:shadow-xl hover:shadow-gray-200/50 transition-all duration-300">
+    <div className="group bg-white cursor-pointer rounded-3xl border border-gray-100 overflow-hidden hover:shadow-xl hover:shadow-gray-200/50 transition-all duration-300">
       <div className="relative h-48 bg-orange-100 overflow-hidden">
         {res.image ? (
           <img
@@ -72,7 +72,7 @@ const RestaurantCard = ({ res, onAdd }) => {
               e.stopPropagation();
               onAdd({ ...res, dishName }); // Send the dish name to cart
             }}
-            className="bg-orange-500 text-white text-[11px] font-black px-4 py-2 rounded-xl hover:bg-orange-600 active:scale-95 transition-all shadow-md shadow-orange-100 uppercase tracking-wider"
+            className="bg-orange-500 cursor-pointer text-white text-[11px] font-black px-4 py-2 rounded-xl hover:bg-orange-600 active:scale-95 transition-all shadow-md shadow-orange-100 uppercase tracking-wider"
           >
             Add Cart
           </button>
@@ -254,8 +254,8 @@ const Home = () => {
                 key={filter}
                 onClick={() => toggleFilter(filter)}
                 className={`px-4 py-2 border rounded-xl text-sm font-semibold transition-all whitespace-nowrap ${activeFilters.includes(filter)
-                    ? 'border-orange-500 bg-orange-50 text-orange-600 shadow-sm'
-                    : 'border-gray-200 text-gray-700 hover:bg-gray-50'
+                  ? 'border-orange-500 bg-orange-50 text-orange-600 shadow-sm'
+                  : 'border-gray-200 text-gray-700 hover:bg-gray-50'
                   }`}
               >
                 {filter}
@@ -269,7 +269,7 @@ const Home = () => {
           <div className="flex items-center justify-between mb-5">
             <h2 className="text-xl font-bold text-gray-900">What's on your mind?</h2>
           </div>
-          <div className="flex gap-5 overflow-x-auto no-scrollbar pb-2">
+          <div className="flex gap-5 overflow-x-auto  no-scrollbar pb-2">
             {categories.map((cat) => (
               <button
                 key={cat}
@@ -278,7 +278,7 @@ const Home = () => {
               >
                 <div className={`w-20 h-20 rounded-full flex items-center justify-center p-3 transition-all duration-200 ${activeCategory === cat ? 'bg-orange-100 ring-2 ring-orange-500' : 'bg-gray-50 group-hover:bg-gray-100'
                   }`}>
-                  <span className="text-3xl">
+                  <span className="text-3xl cursor-pointer">
                     {cat === 'Biryani' ? '🍛' : cat === 'Pizza' ? '🍕' : cat === 'Burgers' ? '🍔' : cat === 'Chinese' ? '🍜' : cat === 'North Indian' ? '🥘' : '🍲'}
                   </span>
                 </div>
@@ -326,7 +326,7 @@ const Home = () => {
             <h2 className="text-3xl font-bold text-gray-900 mb-2">What our customers say</h2>
             <p className="text-gray-500">Join thousands of happy foodies in Kerala</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 cursor-pointer md:grid-cols-3 gap-8">
             {[
               {
                 name: 'Ajay Kumar',
